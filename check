@@ -22,7 +22,9 @@ ENDLINE
         if [ "$(jq -r '.version | has("digest") // false' < /tmp/input.json)" = 'true' ]; then
             json="$(cat <<ENDLINE
 {
-    "digest": "$(jq -r '.version.digest' < /tmp/input.json)"
+    "version": {
+        "digest": "$(jq -r '.version.digest' < /tmp/input.json)"
+    }
 }
 ENDLINE
 )"
