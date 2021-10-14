@@ -12,6 +12,7 @@
 resource_types:
 - name: trigger
   type: registry-image
+  check_every: never
   source:
     repository: fourdollars/trigger-resource
     tag: latest
@@ -23,6 +24,7 @@ or
 resource_types:
 - name: trigger
   type: registry-image
+  check_every: never
   source:
     repository: ghcr.io/fourdollars/trigger-resource
     tag: latest
