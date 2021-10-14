@@ -2,6 +2,8 @@
 # trigger-resource
 [concourse-ci](https://concourse-ci.org/)'s trigger-resource to generate random digest everytime when it checks.
 
+![example](https://github.com/fourdollars/trigger-resource/blob/main/diagram.png?raw=true)
+
 ## Config 
 
 ### Resource Type
