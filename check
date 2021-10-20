@@ -18,7 +18,7 @@ case "$0" in
 ENDLINE
 )"
         ;;
-    ('/opt/resource/in'|'/opt/resource/out')
+    ('/opt/resource/in')
         if [ "$(jq -r '.version | has("digest") // false' < /tmp/input.json)" = 'true' ]; then
             json="$(cat <<ENDLINE
 {
@@ -32,6 +32,15 @@ ENDLINE
             json="{}"
         fi
         ;;
+    ('/opt/resource/out')
+        json="$(cat <<ENDLINE
+{
+    "version": {
+        "digest": "sha256:$(uuidgen | sha256sum | cut -d ' ' -f 1)"
+    }
+}
+ENDLINE
+)"
 esac
 
 echo "$json" >&3
