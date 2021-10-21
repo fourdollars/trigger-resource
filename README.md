@@ -64,6 +64,7 @@ resources:
 ```yaml
 jobs:
 - name: job1
+  disable_manual_trigger: true
   plan:
   - get: trigger-all-jobs
     trigger: true
@@ -82,6 +83,7 @@ jobs:
         - |
           echo "Job 1"
 - name: job2
+  disable_manual_trigger: true
   plan:
   - get: trigger-all-jobs
     trigger: true
@@ -100,6 +102,7 @@ jobs:
         - |
           echo "Job 2"
 - name: job3
+  disable_manual_trigger: true
   plan:
   - get: trigger-all-jobs
     trigger: true
@@ -124,6 +127,7 @@ jobs:
 ```yaml
 jobs:
 - name: job1
+  disable_manual_trigger: true
   plan:
   - get: trigger-job1
     trigger: true
@@ -143,6 +147,7 @@ jobs:
           echo "Job 1"
   - put: trigger-job2
 - name: job2
+  disable_manual_trigger: true
   plan:
   - get: trigger-job2
     trigger: true
@@ -163,6 +168,7 @@ jobs:
           echo "Job 2"
   - put: trigger-job3
 - name: job3
+  disable_manual_trigger: true
   plan:
   - get: trigger-job3
     trigger: true
