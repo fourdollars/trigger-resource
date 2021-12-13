@@ -5,7 +5,7 @@ IFS=$'\n\t'
 
 exec 3>&1
 exec 1>&2
-jq -M -S . < /dev/stdin > /tmp/input.json
+payload="$(cat <&0)"
 
 case "$0" in
     ('/opt/resource/check')
@@ -19,11 +19,11 @@ ENDLINE
 )"
         ;;
     ('/opt/resource/in')
-        if [ "$(jq -r '.version | has("digest") // false' < /tmp/input.json)" = 'true' ]; then
+        if [ "$(jq -r '.version | has("digest") // false' <<< "$payload")" = 'true' ]; then
             json="$(cat <<ENDLINE
 {
     "version": {
-        "digest": "$(jq -r '.version.digest' < /tmp/input.json)"
+        "digest": "$(jq -r '.version.digest' <<< "$payload")"
     }
 }
 ENDLINE
