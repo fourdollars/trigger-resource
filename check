@@ -6,9 +6,12 @@ IFS=$'\n\t'
 exec 3>&1
 exec 1>&2
 payload="$(cat <&0)"
+jq -n "$payload"
+printenv
 
 case "$0" in
     ('/opt/resource/check')
+        ID="$BUILD_ID"
         json="$(cat <<ENDLINE
 [
     {
@@ -20,6 +23,7 @@ ENDLINE
         ;;
     ('/opt/resource/in')
         printenv | sort > "$1"/get-step.env
+        ID="$BUILD_JOB_ID"
         if [ "$(jq -r '.version | has("digest") // false' <<< "$payload")" = 'true' ]; then
             json="$(cat <<ENDLINE
 {
@@ -34,6 +38,7 @@ ENDLINE
         fi
         ;;
     ('/opt/resource/out')
+        ID="$BUILD_JOB_ID"
         json="$(cat <<ENDLINE
 {
     "version": {
@@ -45,3 +50,10 @@ ENDLINE
 esac
 
 echo "$json" >&3
+step=$(basename "$0")
+echo "$payload" > "/tmp/$BUILD_PIPELINE_NAME-job-$ID-step-$step-payload.json"
+echo "$json" > "/tmp/$BUILD_PIPELINE_NAME-job-$ID-step-$step-output.json"
+ls -l /tmp
+jq < "/tmp/$BUILD_PIPELINE_NAME-job-$ID-step-$step-payload.json"
+jq < "/tmp/$BUILD_PIPELINE_NAME-job-$ID-step-$step-output.json"
+
