@@ -19,6 +19,7 @@ ENDLINE
 )"
         ;;
     ('/opt/resource/in')
+        printenv | sort > "$1"/get-step.env
         if [ "$(jq -r '.version | has("digest") // false' <<< "$payload")" = 'true' ]; then
             json="$(cat <<ENDLINE
 {
